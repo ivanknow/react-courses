@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Hello from './components/hello/hello';
+import HelloConnected from './components/hello/helloConnected';
 import logo from './logo.svg';
 import './App.css';
 
@@ -18,6 +19,9 @@ class App extends Component {
   }
 
   render() {
+    const { name } = this.state;
+    const { user } = this.props;
+
     return (
       <div className="App">
         <header className="App-header">
@@ -27,7 +31,8 @@ class App extends Component {
         <input type="text" placeholder="name" onChange={this.handleChange} value={this.state.tempName}
         />
         <button onClick={this.handleClick}>click</button>
-        <Hello name={this.state.name}  />
+        <Hello name={user.name}  />
+        <HelloConnected />
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
@@ -35,18 +40,16 @@ class App extends Component {
     );
   }
 
-  handleClick(e){
-    this.setState((prevState,props)=>({
-      name:prevState.tempName,
-      tempName:''
-    }))
+  handleClick(e) {
+    const { name } = this.state;
+    const { setName } = this.props;
+  
+    setName(name);
   }
-
   handleChange = (e) => {
     this.setState({
-      tempName:e.target.value
-    })
-    console.log(this.state.tempName)
+      name: e.target.value
+    });
   }
 }
 
